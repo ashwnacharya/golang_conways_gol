@@ -47,3 +47,33 @@ func TestCreateGridMapFromLines(t *testing.T) {
 		}
 	}
 }
+
+
+func TestCreateLinesFromGridMap(t *testing.T) {
+	var gridMap [4][]bool
+
+	gridMap[0] = []bool{false, false, false, false, false, false, false, false}
+	gridMap[1] = []bool{false, false, false, false, true, false, false, false}
+	gridMap[2] = []bool{false, false, false, true, true, false, false, false}
+	gridMap[3] = []bool{false, false, false, false, false, false, false, false}
+
+	var expectedLines []string
+
+	expectedLines = append(expectedLines, "4 8")
+	expectedLines = append(expectedLines, "........")
+	expectedLines = append(expectedLines, "....*...")
+	expectedLines = append(expectedLines, "...**...")
+	expectedLines = append(expectedLines, "........")
+
+	actualLines, err := gol.GetLinesFromGridMap(gridMap[:], 4, 8)
+
+	if err != nil {
+		t.Error("Should not return error")
+	}
+
+	for i := 1; i <= 4; i ++ {
+		if expectedLines[i] != actualLines[i] {
+			t.Errorf("Line does not match")
+		}
+	}
+}
